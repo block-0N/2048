@@ -1,0 +1,45 @@
+{
+  "name": "2048",
+  "version": "1.0.0",
+  "description": "2048game",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build-win": "electron-builder --win"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/block-0N/2048.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/block-0N/2048/issues"
+  },
+  "homepage": "https://github.com/block-0N/2048#readme",
+  "devDependencies": {
+    "electron": "^42.4.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.block0n.game2048",
+    "productName": "2048游戏",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
