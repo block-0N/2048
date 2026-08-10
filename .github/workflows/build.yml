@@ -3,11 +3,14 @@ name: Build Electron Windows
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: # 允许网页手动触发构建
+  workflow_dispatch:
 
 jobs:
   build-windows:
     runs-on: windows-latest
+    env:
+      ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
+      ELECTRON_BUILDER_BINARIES_MIRROR: https://npmmirror.com/mirrors/electron-builder-binaries/
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -18,19 +21,15 @@ jobs:
           node-version: 22
           cache: 'npm'
 
-      - name: Set mirror env
-        shell: pwsh
+      - name: Config npm mirror
         run: |
-          $env:ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
-          $env:ELECTRON_BUILDER_BINARIES_MIRROR="https://npmmirror.com/mirrors/electron-builder-binaries/"
-          npm install electron --save-dev
-          npm install electron-builder --save-dev
+          npm config set registry https://registry.npmmirror.com
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Build Windows exe
-        shell: pwsh
-        run: |
-          $env:ELECTRON_BUILDER_BINARIES_MIRROR="https://npmmirror.com/mirrors/electron-builder-binaries/"
-          npm run build-win
+        run: npm run build-win
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -38,9 +37,10 @@ jobs:
           name: windows-build
           path: dist/*.exe
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
+      # 只有git tag推送的时候，才执行release；普通main分支推送直接跳过此步骤
+      - name: Create Release(on tag)
         if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
         with:
           files: dist/*.exe
         env:
