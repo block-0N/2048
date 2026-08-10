@@ -27,6 +27,7 @@
   "build": {
     "appId": "com.block0n.game2048",
     "productName": "2048游戏",
+    "publish": null,
     "win": {
       "target": [
         {

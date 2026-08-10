@@ -13,7 +13,7 @@ jobs:
       ELECTRON_BUILDER_BINARIES_MIRROR: https://npmmirror.com/mirrors/electron-builder-binaries/
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js 22 LTS
         uses: actions/setup-node@v4
@@ -32,16 +32,16 @@ jobs:
         run: npm run build-win
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: windows-build
           path: dist/*.exe
 
-      # 只有git tag推送的时候，才执行release；普通main分支推送直接跳过此步骤
-      - name: Create Release(on tag)
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: dist/*.exe
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 直接注释掉gh-release步骤，普通使用完全不需要，以后要发布版本再打开
+      # - name: Create Release(on tag)
+      # if: startsWith(github.ref, 'refs/tags/')
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     files: dist/*.exe
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
