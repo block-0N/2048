@@ -29,6 +29,7 @@
     "productName": "2048游戏",
     "publish": null,
     "win": {
+      "icon": "build/icon.ico",
       "target": [
         {
           "target": "nsis",
