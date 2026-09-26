@@ -1,25 +1,24 @@
 {
   "name": "2048",
   "version": "1.0.0",
-  "description": "2048game",
+  "description": "A desktop 2048 game built with Electron.",
   "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron .",
-    "build-win": "electron-builder --win"
-  },
+  "author": "block-0N",
+  "license": "MIT",
+  "copyright": "Copyright © 2026 block-0N",
+  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/block-0N/2048.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/block-0N/2048/issues"
   },
   "homepage": "https://github.com/block-0N/2048#readme",
+  "scripts": {
+    "start": "electron .",
+    "build-win": "electron-builder --win"
+  },
   "devDependencies": {
     "electron": "^42.4.1",
     "electron-builder": "^25.1.8"
@@ -27,7 +26,16 @@
   "build": {
     "appId": "com.block0n.game2048",
     "productName": "2048游戏",
+    "copyright": "Copyright © 2026 block-0N",
+    "artifactName": "2048-Setup-${version}.${ext}",
     "publish": null,
+    "files": [
+      "main.js",
+      "index.html",
+      "2048.css",
+      "2048.js",
+      "package.json"
+    ],
     "win": {
       "icon": "build/icon.ico",
       "target": [
@@ -41,7 +49,10 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "2048",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     }
   }
 }
